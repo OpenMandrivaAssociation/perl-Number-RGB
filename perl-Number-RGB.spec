@@ -1,23 +1,23 @@
 %define upstream_name    Number-RGB
 %define upstream_version 1.2
 
-Name:       perl-%{upstream_name}
-Version:    %perl_convert_version %{upstream_version}
-Release:    %mkrel 2
+Name:		perl-%{upstream_name}
+Version:	%perl_convert_version %{upstream_version}
+Release:	3
 
-Summary:    Manipulate RGB Tuples
-License:    GPL+ or Artistic
-Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Number/%{upstream_name}-%{upstream_version}.tar.gz
+Summary:	Manipulate RGB Tuples
+License:	GPL+ or Artistic
+Group:		Development/Perl
+Url:		http://search.cpan.org/dist/%{upstream_name}
+Source0:	http://www.cpan.org/modules/by-module/Number/%{upstream_name}-%{upstream_version}.tar.gz
 
-BuildRequires: perl(Attribute::Handlers)
-BuildRequires: perl(Class::Accessor::Fast)
-BuildRequires: perl(Params::Validate)
-BuildRequires: perl(Test::More)
+BuildRequires:	perl-devel
+BuildRequires:	perl(Attribute::Handlers)
+BuildRequires:	perl(Class::Accessor::Fast)
+BuildRequires:	perl(Params::Validate)
+BuildRequires:	perl(Test::More)
 
-BuildArch: noarch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
+BuildArch:	noarch
 
 %description
 This module creates RGB tuple objects and overloads their operators to make
@@ -28,7 +28,7 @@ construction shorter.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 
 %{make}
 
@@ -38,16 +38,22 @@ construction shorter.
 #%{make} test
 
 %install
-rm -rf %buildroot
 %makeinstall_std
 
-%clean
-rm -rf %buildroot
-
 %files
-%defattr(-,root,root)
 %doc Changes README
 %{_mandir}/man3/*
-%perl_vendorlib/*
+%{perl_vendorlib}/*
+
+%changelog
+* Mon Apr 18 2011 Funda Wang <fwang@mandriva.org> 1.200.0-2mdv2011.0
++ Revision: 655147
+- rebuild for updated spec-helper
+
+* Sun Aug 23 2009 Jérôme Quelin <jquelin@mandriva.org> 1.200.0-1mdv2011.0
++ Revision: 419895
+- import perl-Number-RGB
 
 
+* Sun Aug 23 2009 cpan2dist 1.2-1mdv
+- initial mdv release, generated with cpan2dist
